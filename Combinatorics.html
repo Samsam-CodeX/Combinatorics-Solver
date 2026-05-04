@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combinatorics Solver</title>
+    <style>
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url(bg.png);
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Paper card */
+#cont {
+    background: #faf8f3;
+    padding: 40px 50px;
+    border-radius: 10px;
+    width: 420px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+
+    border-top: 8px solid #6EA18E;
+}
+
+/* Title */
+h1 {
+    margin: 0;
+    margin-bottom: 10px;
+    color: #2c2c2c;
+    font-size: 26px;
+}
+
+/* Subtitle */
+p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+/* Input row */
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    width: 48%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #6EA18E;
+    outline: none;
+}
+
+/* Buttons layout */
+.btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* Buttons */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #6EA18E;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #5f8f7d;
+}
+
+/* Make factorial full width */
+button:first-child {
+    grid-column: span 2;
+}
+
+/* Result */
+.result {
+    height: 24px;
+    margin-top: 20px;
+    padding: 15px;
+    background: #f1f3f9;
+    border-left: 5px solid #6EA18E;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: left;
+}
+
+    </style>
+</head>
+<body>
+    <div id="cont">
+        <h1>Combinatorics Solver</h1>
+    
+        <p>Enter values for n and r</p>
+    
+        <div class="input-row">
+            <input id="n" type="number" placeholder="Enter n" min="0" step="1">
+            <input id="r" type="number" placeholder="Enter r" min="0" step="1">
+        </div>
+
+        <div class="btn-group">
+            <button onclick="factorialCalc()">Factorial (n!)</button>
+            <button onclick="permutation()">P(n,r)</button>
+            <button onclick="combination()">C(n,r)</button>
+        </div>
+    
+        <div class="result" id="output"></div>
+    </div>
+
+<script>
+
+function factorial(n) {
+    if (n < 0) return "Undefined";
+    if (n === 0 || n === 1) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+function factorialCalc() {
+    let n = parseInt(document.getElementById("n").value);
+    if (Number.isNaN(n)) {
+        document.getElementById("output").innerText = "Invalid input";
+        return;
+    }
+    let result = factorial(n);
+    document.getElementById("output").innerText = n + "! = " + result;
+}
+
+function permutation() {
+    let n = parseInt(document.getElementById("n").value);
+    let r = parseInt(document.getElementById("r").value);
+    if (Number.isNaN(n) || Number.isNaN(r)) {
+        document.getElementById("output").innerText = "Invalid input";
+        return;
+    }
+    if (r > n) {
+        document.getElementById("output").innerText = "Invalid: r cannot be greater than n";
+        return;
+    }
+
+    let result = factorial(n) / factorial(n - r);
+    document.getElementById("output").innerText = "P(" + n + "," + r + ") = " + result;
+}
+
+function combination() {
+    let n = parseInt(document.getElementById("n").value);
+    let r = parseInt(document.getElementById("r").value);
+    if (Number.isNaN(n) || Number.isNaN(r)) {
+        document.getElementById("output").innerText = "Invalid input";
+        return;
+    }
+    if (r > n) {
+        document.getElementById("output").innerText = "Invalid: r cannot be greater than n";
+        return;
+    }
+
+    let result = factorial(n) / (factorial(r) * factorial(n - r));
+    document.getElementById("output").innerText = "C(" + n + "," + r + ") = " + result;
+}
+
+</script>
+
+</body>
+</html>
